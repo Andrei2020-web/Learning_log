@@ -20,4 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Добавлен модуль learning_logs.urls.
     path('', include('learning_logs.urls')),
+    # Добавленн модуль users.urls
+    path('users/', include('users.urls')),
 ]
