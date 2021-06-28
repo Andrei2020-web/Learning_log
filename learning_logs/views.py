@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context_processors import request
 
 from .models import Topic, Entry
@@ -24,7 +24,7 @@ def topics(request):
 @login_required
 def topic(request, topic_id):
     """Выводит одну тему и все её записи."""
-    topic = Topic.objects.get(id=topic_id)
+    topic = get_object_or_404(Topic, id=topic_id)
     """Проверка того, что тема принадлежит текущему пользователю."""
     check_topic_owner(request, topic)
     entries = topic.entry_set.order_by('-date_added')
@@ -60,7 +60,7 @@ def new_topic(request):
 @login_required
 def new_entry(request, topic_id):
     """Добавляет новую запист по конкретной теме."""
-    topic = Topic.objects.get(id=topic_id)
+    topic = get_object_or_404(Topic, id=topic_id)
     if request.method != 'POST':
         # Данные не отправлялись, создаётся пустая форма
         form = EntryForm()
@@ -82,7 +82,7 @@ def new_entry(request, topic_id):
 @login_required
 def edit_entry(request, entry_id):
     """Редактирует текущую запись."""
-    entry = Entry.objects.get(id=entry_id)
+    entry = get_object_or_404(Entry, id=entry_id)
     topic = entry.topic
     check_topic_owner(request, topic)
 
