@@ -1,5 +1,4 @@
 {% extends "learning_logs/base.html" %}
-{% load bootstrap4 %}
 
 {% block page_header %}
     <h2>Log in to your account.</h2>
@@ -9,10 +8,10 @@
 
     <form method="post" action="{% url 'users:login' %}" class="form">
         {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
+        {{ form }}
+        {% block buttons %}
             <button name="submit" class="btn-primary">log in</button>
-        {% endbuttons %}
+        {% endblock buttons %}
         <input type="hidden" name="next"
             value="{% url 'learning_logs:index' %}" />
     </form>
